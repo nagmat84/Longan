@@ -10,10 +10,10 @@ use App\Exceptions\MediaFileOperationException;
 use App\Exceptions\ModelDBException;
 use App\Facades\AccessControl;
 use App\Image\FlysystemFile;
+use App\Models\Extensions\FixedQueryBuilder;
 use App\Models\Extensions\HasAttributesPatch;
 use App\Models\Extensions\HasBidirectionalRelationships;
 use App\Models\Extensions\ThrowsConsistentExceptions;
-use App\Models\Extensions\UseFixedQueryBuilder;
 use App\Models\Extensions\UTCBasedTimes;
 use App\Relations\HasManyBidirectionally;
 use Illuminate\Database\Eloquent\Collection;
@@ -60,8 +60,6 @@ class SizeVariant extends Model
 	use HasAttributesPatch;
 	use HasBidirectionalRelationships;
 	use ThrowsConsistentExceptions;
-	/** @phpstan-use UseFixedQueryBuilder<SizeVariant> */
-	use UseFixedQueryBuilder;
 
 	public const ORIGINAL = 0;
 	public const MEDIUM2X = 1;
@@ -246,5 +244,24 @@ class SizeVariant extends Model
 		$fileDeleter = (new Delete())->do([$this->id]);
 		$this->exists = false;
 		$fileDeleter->do();
+	}
+
+	/**
+	 * @param $query
+	 *
+	 * @return FixedQueryBuilder<SizeVariant>
+	 */
+	public function newEloquentBuilder($query): FixedQueryBuilder
+	{
+		return new FixedQueryBuilder($query); // @phpstan-ignore-line
+	}
+
+	/**
+	 * @return FixedQueryBuilder<SizeVariant>
+	 */
+	public static function query(): FixedQueryBuilder
+	{
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
+		return parent::query(); // @phpstan-ignore-line
 	}
 }

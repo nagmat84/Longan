@@ -18,7 +18,7 @@ use Illuminate\Database\Query\Builder as BaseBuilder;
 use Illuminate\Database\Query\JoinClause;
 
 /**
- * @mixin Builder
+ * @extends Relation<Photo>
  */
 class HasAlbumThumb extends Relation
 {
@@ -41,6 +41,9 @@ class HasAlbumThumb extends Relation
 		);
 	}
 
+	/**
+	 * @return FixedQueryBuilder<Photo>
+	 */
 	protected function getRelationQuery(): FixedQueryBuilder
 	{
 		/**
@@ -66,7 +69,7 @@ class HasAlbumThumb extends Relation
 			/** @var Album $album */
 			$album = $this->parent;
 			if ($album->cover_id != null) {
-				$this->where('photos.id', '=', $album->cover_id);
+				$this->getRelationQuery()->where('photos.id', '=', $album->cover_id);
 			} else {
 				$this->photoAuthorisationProvider
 					->applySearchabilityFilter($this->getRelationQuery(), $album);

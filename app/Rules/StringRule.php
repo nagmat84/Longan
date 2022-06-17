@@ -26,15 +26,14 @@ abstract class StringRule implements Rule
 	 */
 	public function passes($attribute, $value): bool
 	{
-		return
-			(
-				$value === null &&
-				$this->isNullable
-			) || (
-				is_string($value) &&
-				strlen($value) != 0 &&
-				($this->limit === 0 || strlen($value) <= $this->limit)
-			);
+		return (
+			$value === null &&
+			$this->isNullable
+		) || (
+			is_string($value) &&
+			strlen($value) !== 0 &&
+			($this->limit === 0 || strlen($value) <= $this->limit)
+		);
 	}
 
 	/**
@@ -45,6 +44,6 @@ abstract class StringRule implements Rule
 		return ':attribute must be' .
 			($this->isNullable ? ' either null or' : '') .
 			' a non-empty string' .
-			($this->limit != 0 ? ' with at most ' . $this->limit . ' characters' : '');
+			($this->limit !== 0 ? ' with at most ' . $this->limit . ' characters' : '');
 	}
 }

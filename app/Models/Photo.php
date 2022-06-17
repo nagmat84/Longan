@@ -15,12 +15,12 @@ use App\Exceptions\ModelDBException;
 use App\Facades\AccessControl;
 use App\Facades\Helpers;
 use App\Image\MediaFile;
+use App\Models\Extensions\FixedQueryBuilder;
 use App\Models\Extensions\HasAttributesPatch;
 use App\Models\Extensions\HasBidirectionalRelationships;
 use App\Models\Extensions\HasRandomIDAndLegacyTimeBasedID;
 use App\Models\Extensions\SizeVariants;
 use App\Models\Extensions\ThrowsConsistentExceptions;
-use App\Models\Extensions\UseFixedQueryBuilder;
 use App\Models\Extensions\UTCBasedTimes;
 use App\Relations\HasManySizeVariants;
 use App\Relations\LinkedPhotoCollection;
@@ -81,8 +81,6 @@ class Photo extends Model implements HasRandomID
 	use HasRandomIDAndLegacyTimeBasedID;
 	use ThrowsConsistentExceptions;
 	use HasBidirectionalRelationships;
-	/** @phpstan-use UseFixedQueryBuilder<Photo> */
-	use UseFixedQueryBuilder;
 
 	/**
 	 * @var string The type of the primary key
@@ -488,5 +486,24 @@ class Photo extends Model implements HasRandomID
 		$fileDeleter = (new Delete())->do([$this->id]);
 		$this->exists = false;
 		$fileDeleter->do();
+	}
+
+	/**
+	 * @param $query
+	 *
+	 * @return FixedQueryBuilder<Photo>
+	 */
+	public function newEloquentBuilder($query): FixedQueryBuilder
+	{
+		return new FixedQueryBuilder($query); // @phpstan-ignore-line
+	}
+
+	/**
+	 * @return FixedQueryBuilder<Photo>
+	 */
+	public static function query(): FixedQueryBuilder
+	{
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
+		return parent::query(); // @phpstan-ignore-line
 	}
 }

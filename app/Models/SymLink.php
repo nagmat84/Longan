@@ -7,9 +7,9 @@ use App\Exceptions\Internal\FrameworkException;
 use App\Exceptions\MediaFileOperationException;
 use App\Exceptions\ModelDBException;
 use App\Image\FlysystemFile;
+use App\Models\Extensions\FixedQueryBuilder;
 use App\Models\Extensions\HasAttributesPatch;
 use App\Models\Extensions\ThrowsConsistentExceptions;
-use App\Models\Extensions\UseFixedQueryBuilder;
 use App\Models\Extensions\UTCBasedTimes;
 use Carbon\Exceptions\InvalidTimeZoneException;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Safe\Exceptions\FilesystemException;
 use function Safe\symlink;
 use function Safe\unlink;
 
@@ -40,8 +41,6 @@ class SymLink extends Model
 	use ThrowsConsistentExceptions {
 		ThrowsConsistentExceptions::delete as private internalDelete;
 	}
-	/** @phpstan-use UseFixedQueryBuilder<SymLink> */
-	use UseFixedQueryBuilder;
 
 	public const DISK_NAME = 'symbolic';
 
@@ -124,10 +123,14 @@ class SymLink extends Model
 		$extension = $file->getExtension();
 		$symShortPath = hash('sha256', random_bytes(32) . '|' . $origFullPath) . $extension;
 		$symFullPath = Storage::disk(SymLink::DISK_NAME)->path($symShortPath);
-		if (is_link($symFullPath)) {
-			unlink($symFullPath);
+		try {
+			if (is_link($symFullPath)) {
+				unlink($symFullPath);
+			}
+			symlink($origFullPath, $symFullPath);
+		} catch (FilesystemException $e) {
+			throw new MediaFileOperationException($e->getMessage(), $e);
 		}
-		symlink($origFullPath, $symFullPath);
 		$this->short_path = $symShortPath;
 
 		return parent::performInsert($query);
@@ -153,5 +156,24 @@ class SymLink extends Model
 		$symLink->delete();
 
 		return $this->internalDelete();
+	}
+
+	/**
+	 * @param $query
+	 *
+	 * @return FixedQueryBuilder<SymLink>
+	 */
+	public function newEloquentBuilder($query): FixedQueryBuilder
+	{
+		return new FixedQueryBuilder($query); // @phpstan-ignore-line
+	}
+
+	/**
+	 * @return FixedQueryBuilder<SymLink>
+	 */
+	public static function query(): FixedQueryBuilder
+	{
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
+		return parent::query(); // @phpstan-ignore-line
 	}
 }

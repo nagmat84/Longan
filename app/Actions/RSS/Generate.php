@@ -65,7 +65,7 @@ class Generate
 
 		$photos = $this->photoAuthorisationProvider
 			->applySearchabilityFilter(
-				Photo::with(['album', 'owner', 'size_variants', 'size_variants.sym_links'])
+				Photo::query()->with(['album', 'owner', 'size_variants', 'size_variants.sym_links'])
 			)
 			->where('photos.created_at', '>=', $nowMinus)
 			->limit($rss_max)

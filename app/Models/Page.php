@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Exceptions\Internal\QueryBuilderException;
 use App\Models\Extensions\FixedQueryBuilder;
 use App\Models\Extensions\ThrowsConsistentExceptions;
-use App\Models\Extensions\UseFixedQueryBuilder;
 use App\Models\Extensions\UTCBasedTimes;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -42,8 +41,6 @@ class Page extends Model
 {
 	use UTCBasedTimes;
 	use ThrowsConsistentExceptions;
-	/** @phpstan-use UseFixedQueryBuilder<Page> */
-	use UseFixedQueryBuilder;
 
 	/**
 	 * Return the relationship between a page and its content.
@@ -94,5 +91,24 @@ class Page extends Model
 		return $query
 			->where('enabled', true)
 			->orderBy('order');
+	}
+
+	/**
+	 * @param $query
+	 *
+	 * @return FixedQueryBuilder<Page>
+	 */
+	public function newEloquentBuilder($query): FixedQueryBuilder
+	{
+		return new FixedQueryBuilder($query); // @phpstan-ignore-line
+	}
+
+	/**
+	 * @return FixedQueryBuilder<Page>
+	 */
+	public static function query(): FixedQueryBuilder
+	{
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
+		return parent::query(); // @phpstan-ignore-line
 	}
 }

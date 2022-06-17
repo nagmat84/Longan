@@ -3,7 +3,6 @@
 namespace App\Relations;
 
 use App\Actions\PhotoAuthorisationProvider;
-use App\DTO\SortingCriterion;
 use App\Exceptions\Internal\InvalidOrderDirectionException;
 use App\Models\Extensions\BaseAlbum;
 use App\Models\Extensions\FixedQueryBuilder;
@@ -16,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\Relation;
  * Common base class of all photo relations for albums which are not the
  * direct parent of the queried photos, but include the photo due to some
  * indirect condition.
+ *
+ * @extends Relation<Photo>
  */
 abstract class HasManyPhotos extends Relation
 {
@@ -58,6 +59,9 @@ abstract class HasManyPhotos extends Relation
 		);
 	}
 
+	/**
+	 * @return FixedQueryBuilder<Photo>
+	 */
 	protected function getRelationQuery(): FixedQueryBuilder
 	{
 		/**
@@ -113,7 +117,7 @@ abstract class HasManyPhotos extends Relation
 	 * sorting, the collection is sorted after is has been fetched from
 	 * the DB.
 	 *
-	 * @return Collection
+	 * @return Collection<Photo>
 	 *
 	 * @throws InvalidOrderDirectionException
 	 */
@@ -121,7 +125,6 @@ abstract class HasManyPhotos extends Relation
 	{
 		/** @var BaseAlbum */
 		$parent = $this->parent;
-		/** @var SortingCriterion $sorting */
 		$sorting = $parent->getEffectiveSorting();
 
 		return (new SortingDecorator($this->getRelationQuery()))

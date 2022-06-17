@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Extensions\FixedQueryBuilder;
 use App\Models\Extensions\ThrowsConsistentExceptions;
-use App\Models\Extensions\UseFixedQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Markdown;
 use Illuminate\Support\Carbon;
@@ -23,8 +23,6 @@ use Illuminate\Support\Carbon;
 class PageContent extends Model
 {
 	use ThrowsConsistentExceptions;
-	/** @phpstan-use UseFixedQueryBuilder<PageContent> */
-	use UseFixedQueryBuilder;
 
 	/**
 	 * Return content.
@@ -45,5 +43,24 @@ class PageContent extends Model
 		}
 
 		return $return;
+	}
+
+	/**
+	 * @param $query
+	 *
+	 * @return FixedQueryBuilder<PageContent>
+	 */
+	public function newEloquentBuilder($query): FixedQueryBuilder
+	{
+		return new FixedQueryBuilder($query); // @phpstan-ignore-line
+	}
+
+	/**
+	 * @return FixedQueryBuilder<PageContent>
+	 */
+	public static function query(): FixedQueryBuilder
+	{
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
+		return parent::query(); // @phpstan-ignore-line
 	}
 }

@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Exceptions\ModelDBException;
 use App\Facades\AccessControl;
+use App\Models\Extensions\FixedQueryBuilder;
 use App\Models\Extensions\ThrowsConsistentExceptions;
-use App\Models\Extensions\UseFixedQueryBuilder;
 use App\Models\Extensions\UTCBasedTimes;
 use Carbon\Exceptions\InvalidFormatException;
 use DarkGhostHunter\Larapass\Contracts\WebAuthnAuthenticatable;
@@ -44,8 +44,6 @@ class User extends Authenticatable implements WebAuthnAuthenticatable
 	use ThrowsConsistentExceptions {
 		delete as parentDelete;
 	}
-	/** @phpstan-use UseFixedQueryBuilder<User> */
-	use UseFixedQueryBuilder;
 
 	/**
 	 * @var string[] the attributes that are mass assignable
@@ -169,5 +167,24 @@ class User extends Authenticatable implements WebAuthnAuthenticatable
 		$this->shared()->delete();
 
 		return $this->parentDelete();
+	}
+
+	/**
+	 * @param $query
+	 *
+	 * @return FixedQueryBuilder<User>
+	 */
+	public function newEloquentBuilder($query): FixedQueryBuilder
+	{
+		return new FixedQueryBuilder($query); // @phpstan-ignore-line
+	}
+
+	/**
+	 * @return FixedQueryBuilder<User>
+	 */
+	public static function query(): FixedQueryBuilder
+	{
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
+		return parent::query(); // @phpstan-ignore-line
 	}
 }
