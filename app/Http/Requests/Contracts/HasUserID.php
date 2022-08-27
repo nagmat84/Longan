@@ -7,7 +7,7 @@ interface HasUserID
 	public const USER_ID_ATTRIBUTE = 'userID';
 
 	/**
-	 * @return int
+	 * @return int|null
 	 */
-	public function userID(): int;
+	public function userID(): ?int;
 }

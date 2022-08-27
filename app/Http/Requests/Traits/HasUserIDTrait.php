@@ -5,14 +5,14 @@ namespace App\Http\Requests\Traits;
 trait HasUserIDTrait
 {
 	/**
-	 * @var int
+	 * @var int|null
 	 */
-	protected int $userID;
+	protected ?int $userID;
 
 	/**
-	 * @return int
+	 * @return int|null
 	 */
-	public function userID(): int
+	public function userID(): ?int
 	{
 		return $this->userID;
 	}

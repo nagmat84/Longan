@@ -90,6 +90,7 @@ Route::post('/Settings::setLogin', [Administration\SettingsController::class, 's
 Route::post('/Settings::updateLogin', [Administration\SettingsController::class, 'updateLogin']);
 
 Route::post('/Sharing::list', [Administration\SharingController::class, 'list']);
+Route::post('/Sharing::listUserSharingInfo', [Administration\SharingController::class, 'listUserSharingInfo']);
 Route::post('/Sharing::add', [Administration\SharingController::class, 'add']);
 Route::post('/Sharing::delete', [Administration\SharingController::class, 'delete']);
 

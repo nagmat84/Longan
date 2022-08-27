@@ -8,7 +8,7 @@ use App\Exceptions\Internal\QueryBuilderException;
 use App\Exceptions\UnauthenticatedException;
 use App\Exceptions\UnauthorizedException;
 use App\Http\Requests\Sharing\DeleteSharingRequest;
-use App\Http\Requests\Sharing\SetSharingRequest;
+use App\Http\Requests\Sharing\ListUserSharingInfoRequest;
 use App\Models\User;
 use App\Policies\UserPolicy;
 use Illuminate\Database\Eloquent\Collection;
@@ -45,16 +45,38 @@ class SharingController extends Controller
 		return $listShare->do($userId);
 	}
 
+	public function listUserSharingInfo(ListUserSharingInfoRequest $request): array
+	{
+		// TODO: This is only mock-up
+		return [[
+			'id' => 42,
+			'user_id' => 15,
+			'username' => 'John Doe',
+			'album_id' => 73,
+			'album_title' => 'Foo',
+			'is_full_photo_granted' => true,
+			'is_downloadable' => false,
+		], [
+			'id' => 4711,
+			'user_id' => 9,
+			'username' => 'Jane Doe',
+			'album_id' => 18,
+			'album_title' => 'Bar',
+			'is_full_photo_granted' => false,
+			'is_downloadable' => true,
+		]];
+	}
+
 	/**
 	 * Add a sharing between selected users and selected albums.
 	 *
-	 * @param SetSharingRequest $request
+	 * @param ListUserSharingInfoRequest $request
 	 *
 	 * @return void
 	 *
 	 * @throws QueryBuilderException
 	 */
-	public function add(SetSharingRequest $request): void
+	public function add(ListUserSharingInfoRequest $request): void
 	{
 		/** @var Collection<User> $users */
 		$users = User::query()
