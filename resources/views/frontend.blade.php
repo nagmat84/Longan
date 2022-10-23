@@ -31,7 +31,7 @@
 			@include('feed::links')
 		@endif
 	</head>
-	<body class="mode-none">
+	<body class="mode-none vflex-container">
 		{!! $bodyHtml !!}
 		<script async defer type="text/javascript" src="dist/frontend.js"></script>
 		<script async defer type="text/javascript" src="dist/WebAuthn.js"></script>
