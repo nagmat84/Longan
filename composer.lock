@@ -1366,16 +1366,16 @@
         },
         {
             "name": "dedoc/scramble",
-            "version": "v0.12.11",
+            "version": "v0.12.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dedoc/scramble.git",
-                "reference": "83aacb9d81ed147ac086f42967de288a3415c5d6"
+                "reference": "c209db61ecb517c573e59666f16030bda5adc8db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dedoc/scramble/zipball/83aacb9d81ed147ac086f42967de288a3415c5d6",
-                "reference": "83aacb9d81ed147ac086f42967de288a3415c5d6",
+                "url": "https://api.github.com/repos/dedoc/scramble/zipball/c209db61ecb517c573e59666f16030bda5adc8db",
+                "reference": "c209db61ecb517c573e59666f16030bda5adc8db",
                 "shasum": ""
             },
             "require": {
@@ -1430,7 +1430,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dedoc/scramble/issues",
-                "source": "https://github.com/dedoc/scramble/tree/v0.12.11"
+                "source": "https://github.com/dedoc/scramble/tree/v0.12.12"
             },
             "funding": [
                 {
@@ -1438,7 +1438,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-09T10:32:56+00:00"
+            "time": "2025-03-15T10:08:07+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -3336,16 +3336,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v11.44.1",
+            "version": "v11.44.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0883d4175f4e2b5c299e7087ad3c74f2ce195c6d"
+                "reference": "f85216c82cbd38b66d67ebd20ea762cb3751a4b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0883d4175f4e2b5c299e7087ad3c74f2ce195c6d",
-                "reference": "0883d4175f4e2b5c299e7087ad3c74f2ce195c6d",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f85216c82cbd38b66d67ebd20ea762cb3751a4b4",
+                "reference": "f85216c82cbd38b66d67ebd20ea762cb3751a4b4",
                 "shasum": ""
             },
             "require": {
@@ -3547,7 +3547,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-03-05T15:34:10+00:00"
+            "time": "2025-03-12T14:34:30+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -8264,16 +8264,16 @@
         },
         {
             "name": "spatie/laravel-data",
-            "version": "4.13.2",
+            "version": "4.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-data.git",
-                "reference": "bd060f6d47ad4a3fac1f92162d76bfd9975b10ca"
+                "reference": "3e1240353569e8fb64b5859eed01652d5df3358b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/bd060f6d47ad4a3fac1f92162d76bfd9975b10ca",
-                "reference": "bd060f6d47ad4a3fac1f92162d76bfd9975b10ca",
+                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/3e1240353569e8fb64b5859eed01652d5df3358b",
+                "reference": "3e1240353569e8fb64b5859eed01652d5df3358b",
                 "shasum": ""
             },
             "require": {
@@ -8334,7 +8334,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-data/issues",
-                "source": "https://github.com/spatie/laravel-data/tree/4.13.2"
+                "source": "https://github.com/spatie/laravel-data/tree/4.14.0"
             },
             "funding": [
                 {
@@ -8342,7 +8342,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-03T09:59:10+00:00"
+            "time": "2025-03-14T14:26:23+00:00"
         },
         {
             "name": "spatie/laravel-feed",
