@@ -1,5 +1,5 @@
 <!--
-Thank you for contributing to Lychee! We only accept PR to the master branch.
+Thank you for contributing to Longan! We only accept PR to the master branch.
 
 In addition, please describe the benefit to end users; the reasons it does not break any existing features, etc.
 
